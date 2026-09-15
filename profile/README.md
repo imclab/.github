@@ -1,6 +1,6 @@
 ## The IMC Lab
 
-A creative VR/AR/XR incubator in New York City · [theimclab.com](https://www.theimclab.com) · [xra1.com](https://xra1.com)
+AI + XR spatial media lab + studio in New York City, LA & Europe · [TheIMCLab.com](https://www.theimclab.com) · [H3M.ai](https://H3M.ai) · [ZeroSpace.co](https://ZeroSpace.co) · [WaveXR.com](https://WaveXR.com) ·
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/imclab/.github/main/profile-3d-contrib/profile-night-green.svg">
