@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Isometric 3D contribution calendar for a GitHub user, as SVG, with no dependencies but the gh CLI.
-Stand-in for the github-profile-3d-contrib Action (same file names) while Actions cannot run.
+Same file names as the github-profile-3d-contrib Action; refreshed daily by scripts/refresh.sh under launchd.
 Usage: scripts/contrib3d.py JT5D profile-3d-contrib"""
-import json, math, subprocess, sys, os
+import datetime, json, math, subprocess, sys, os
 user, out = sys.argv[1], sys.argv[2]
 q = 'query($u:String!){user(login:$u){contributionsCollection{contributionCalendar{totalContributions weeks{contributionDays{contributionCount weekday}}}}}}'
 cal = json.loads(subprocess.check_output(['gh', 'api', 'graphql', '-f', f'query={q}', '-f', f'u={user}'], env={**os.environ, 'NO_COLOR': '1', 'CLICOLOR_FORCE': '0', 'GH_FORCE_TTY': ''}))['data']['user']['contributionsCollection']['contributionCalendar']
@@ -31,7 +31,7 @@ for name, (bg, fg, scale) in THEMES.items():
     minx, maxx, miny, maxy = min(xs) - 10, max(xs) + 10, -H - 10, iso(54, 7, 0)[1] + 10
     svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{minx:.0f} {miny - 30:.0f} {maxx - minx:.0f} {maxy - miny + 30:.0f}" role="img" aria-label="{cal["totalContributions"]} contributions in the last year">'
            f'<rect x="{minx:.0f}" y="{miny - 30:.0f}" width="100%" height="100%" fill="{bg}"/>'
-           f'<text x="{minx + 16:.0f}" y="{miny - 8:.0f}" fill="{fg}" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="14">{cal["totalContributions"]:,} contributions in the last year</text>'
+           f'<text x="{minx + 16:.0f}" y="{miny - 8:.0f}" fill="{fg}" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-size="14">{cal["totalContributions"]:,} contributions in the last year · updated {datetime.date.today()}</text>'
            + ''.join(polys) + '</svg>')
     open(os.path.join(out, name), 'w').write(svg)
 print(cal['totalContributions'], 'contributions,', len(cells), 'days')
